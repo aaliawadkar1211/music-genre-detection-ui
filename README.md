@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Music Genre Classifier Frontend
 
-## Getting Started
+A single-page Next.js App Router frontend for the Music Genre Classifier API.
 
-First, run the development server:
+Features:
+- Record audio via MediaRecorder (up to 30s)
+- Upload `.mp3` or `.wav`
+- Sends multipart/form-data with field `file` to `POST /predict`
+- Polished result card with predicted genre and confidence
+- Spinner while waiting, and small history (last 3 predictions)
+- Apple/FAANG-style UI (rounded cards, soft shadows, subtle animations)
+- Environment-configurable API base URL (server-side)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## API Configuration
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Default base:
+- https://music-genre-detection-api-yv06.onrender.com
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Override via environment variable (server-only):
+- API_BASE_URL=https://your-api-base-url
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The UI posts to `/api/predict`, which proxies to `${API_BASE_URL}/predict`.
 
-## Learn More
+## How it works
 
-To learn more about Next.js, take a look at the following resources:
+1. Record or upload a file.
+2. The app sends `multipart/form-data` with `file` to the local route `/api/predict`.
+3. The route forwards to the external API and returns its response.
+4. The UI normalizes common response shapes into `{ genre, confidence }` and keeps the last 3 results in `localStorage`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- MediaRecorder may produce `audio/webm` (Chrome/Edge), `audio/ogg` (Firefox), or `audio/mp4` (Safari). Uploading from disk accepts `.mp3` and `.wav`.
+- If your API only accepts certain formats, consider adding server-side transcoding.
 
-## Deploy on Vercel
+## Install / Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- In v0, open the preview menu to Download ZIP or push to GitHub, then Deploy on Vercel.
+- In Project Settings, add `API_BASE_URL` if you need a custom endpoint.
