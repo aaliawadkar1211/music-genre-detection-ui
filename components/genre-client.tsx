@@ -59,6 +59,17 @@ export default function GenreClient() {
     })
   }, [])
 
+  const friendlyError = (status: number, body: any): string => {
+    if (status === 413) return "The file is too large. Please upload a shorter audio clip."
+    if (status === 415) return "Unsupported file format. Please upload a .wav or .mp3 file."
+    if (status === 422) return "The file could not be processed. Try another recording."
+    if (status >= 500) return "Our servers are having trouble. Please try again later."
+
+    // fallback from API error text
+    if (typeof body?.error === "string") return body.error
+    return "Something went wrong while analyzing your audio. Please try again."
+  }
+
   const handlePredict = useCallback(
     async (file: File) => {
       setError(null)
@@ -68,7 +79,7 @@ export default function GenreClient() {
       try {
         const form = new FormData()
         form.append("file", file)
-        console.log("[v0] Sending to /api/predict with file:", file.name, file.type, file.size)
+        console.log("[client] Sending to /api/predict with file:", file.name, file.type, file.size)
 
         const res = await fetch("/api/predict", { method: "POST", body: form })
 
@@ -78,12 +89,7 @@ export default function GenreClient() {
           try {
             body = await res.json()
           } catch {
-            const text = await res.text()
-            try {
-              body = JSON.parse(text)
-            } catch {
-              body = { error: text || "Malformed response" }
-            }
+            body = { error: "Invalid JSON response" }
           }
         } else {
           const text = await res.text()
@@ -95,11 +101,7 @@ export default function GenreClient() {
         }
 
         if (!res.ok || body?.error) {
-          const msg =
-            (typeof body?.error === "string" && body.error) ||
-            (Array.isArray(body?.detail) && body.detail[0]?.msg) ||
-            `Request failed with ${res.status}`
-          throw new Error(msg)
+          throw new Error(friendlyError(res.status, body))
         }
 
         const normalized = normalizeResponse(body)
@@ -107,17 +109,16 @@ export default function GenreClient() {
           id: `${Date.now()}`,
           fileName: file.name,
           genre: normalized.genre,
-          confidence: normalized.confidence ?? undefined,  // ✅ safe
+          confidence: normalized.confidence ?? undefined,
           allProbabilities: normalized.allProbabilities ?? undefined,
           at: new Date().toISOString(),
-}
-
+        }
 
         setResult(entry)
         pushHistory(entry)
       } catch (e: any) {
-        console.error("[v0] Prediction error:", e)
-        setError(e?.message || "Something went wrong")
+        console.error("[client] Prediction error:", e)
+        setError(e?.message || "Unexpected error. Please try again.")
       } finally {
         setIsLoading(false)
       }
@@ -127,10 +128,10 @@ export default function GenreClient() {
 
   const onRecorded = useCallback(
     (blob: Blob) => {
-      const tooSmall = blob.size < 8 * 1024 // 8KB threshold for silence/very short
+      const tooSmall = blob.size < 8 * 1024 // 8KB threshold
       if (tooSmall) {
-        console.log("[v0] Warning: recording is very small, predictions may default.")
-        setError("Recording is very quiet/short. Try speaking closer to the mic.")
+        setError("The recording was too short or silent. Please try again.")
+        return
       }
       const file = new File([blob], "recording.wav", { type: "audio/wav" })
       handlePredict(file)
@@ -153,8 +154,8 @@ export default function GenreClient() {
       </div>
 
       {error && (
-        <div className="glass dark:glass-dark rounded-xl sm:rounded-2xl p-3 sm:p-4 border-l-4 border-destructive bg-destructive/5">
-          <p className="text-xs sm:text-sm text-destructive font-medium">{error}</p>
+        <div className="rounded-xl sm:rounded-2xl p-3 sm:p-4 border-l-4 border-red-500 bg-red-50 dark:bg-red-900/30">
+          <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>
         </div>
       )}
 

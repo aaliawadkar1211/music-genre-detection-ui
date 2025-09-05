@@ -8,11 +8,11 @@ import { Progress } from "@/components/ui/progress"
 import {
   Database,
   Brain,
-  BarChart3,
+  
   Github,
   ExternalLink,
   Music,
-  Zap,
+
   Target,
   Award,
   Code,
@@ -55,10 +55,10 @@ export default function ProjectInfo() {
               <Music className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Music Genre Classification
-              </h2>
-              <p className="text-sm text-muted-foreground">End-to-end ML Project</p>
+                <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Music Genre Detector
+                </h2>
+                <p className="text-right text-sm   bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent"> ~ By Aaliaa Wadkar</p>
             </div>
           </div>
         </div>
@@ -102,14 +102,27 @@ export default function ProjectInfo() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Database className="w-5 h-5 text-blue-500" />
-                Dataset & Features
+                
+                  Dataset & Features
+                
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
+                <span
+                  className="cursor-pointer hover:underline"
+                  onClick={() =>
+                    window.open(
+                      "https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification?select=Data",
+                      "_blank",
+                      "noopener,noreferrer"
+                    )
+                  }
+                >
                 <Badge variant="secondary" className="mb-2">
                   GTZAN Dataset
                 </Badge>
+                </span>
                 <p className="text-sm text-muted-foreground">1000 audio tracks across 10 genres, 30 seconds each</p>
               </div>
               <div>
@@ -197,12 +210,24 @@ export default function ProjectInfo() {
 
             <div className="space-y-3">
               <h4 className="font-medium text-sm">Response Format</h4>
-              <div className="bg-muted/50 rounded-lg p-3 font-mono text-xs">
-                {`{
-  "genre": "classical",
-  "confidence": 0.95
-}`}
-              </div>
+              <pre className="bg-muted/50 rounded-lg p-3 font-mono text-xs overflow-x-auto whitespace-pre">
+      {`{
+        "predicted_genre": "jazz",
+        "confidence": 97.84,
+        "all_probabilities": {
+        "blues": 0.003187843913445846,
+        "classical": 0.0002721166382115396,
+        "country": 0.0009048546547070001,
+        "disco": 0.001964744238376213,
+        "hiphop": 0.0003845549953317146,
+        "jazz": 0.9783513192004596,
+        "metal": 0.0019130558225284562,
+        "pop": 0.000281538108717745,
+        "reggae": 0.002955505595429195,
+        "rock": 0.009784466832792552
+        }
+      }`}
+              </pre>
             </div>
 
             <div className="grid sm:grid-cols-3 gap-3">
@@ -216,42 +241,46 @@ export default function ProjectInfo() {
               </div>
               <div className="text-center p-3 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10">
                 <div className="text-lg font-bold text-purple-600">30s</div>
-                <div className="text-xs text-muted-foreground">Max Duration</div>
+                <div className="text-xs text-muted-foreground">Optimal Duration</div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Key Highlights */}
-        <Card className="glass dark:glass-dark border-white/10">
+        {/* Key Learnings */}
+        <Card className="glass dark:glass-dark border-white/10 relative overflow-hidden">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Award className="w-5 h-5 text-yellow-500" />
-              Key Highlights
+              Key Learnings
             </CardTitle>
+            <CardDescription>Highlights of important insights gained during this project</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10">
-                <Music className="w-5 h-5 text-purple-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-sm">Multi-Genre Classification</h4>
-                  <p className="text-xs text-muted-foreground">10 distinct music genres</p>
-                </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 relative overflow-hidden">
+          <div>
+            <h4 className="font-medium text-sm bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Feature Consistency</h4>
+            <p className="text-xs text-muted-foreground">
+              Extracted MFCCs, chroma, contrast, tonnetz etc., and kept training + inference feature order identical to avoid mismatch bugs.
+            </p>
+          </div>
               </div>
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-blue-500/10 to-teal-500/10">
-                <BarChart3 className="w-5 h-5 text-blue-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-sm">Rich Feature Pipeline</h4>
-                  <p className="text-xs text-muted-foreground">Advanced audio analysis</p>
-                </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-blue-500/10 to-teal-500/10 relative overflow-hidden">
+          <div>
+            <h4 className="font-medium text-sm bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">Modeling & Analysis</h4>
+            <p className="text-xs text-muted-foreground">
+              Tried RF / KNN / LogReg / SVM; SVM (RBF) gave the best result (~80%). Used confusion matrices to find which genres need more data.
+            </p>
+          </div>
               </div>
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-teal-500/10 to-green-500/10">
-                <Zap className="w-5 h-5 text-teal-500 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-sm">Real-time Prediction</h4>
-                  <p className="text-xs text-muted-foreground">Upload or record live</p>
-                </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-br from-teal-500/10 to-green-500/10 relative overflow-hidden">
+          <div>
+            <h4 className="font-medium text-sm bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent">Production Readiness</h4>
+            <p className="text-xs text-muted-foreground">
+              Saved scaler + model, added probability/confidence output, pinned dependencies and tested the FastAPI locally before deploying to Render.
+            </p>
+          </div>
               </div>
             </div>
           </CardContent>
@@ -263,7 +292,7 @@ export default function ProjectInfo() {
             asChild
             className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
           >
-            <a href="https://github.com/yourusername/music-genre-classifier" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/aaliawadkar1211/music-genre-detection-api" target="_blank" rel="noopener noreferrer">
               <Github className="w-4 h-4 mr-2" />
               View Source Code
             </a>
@@ -273,7 +302,7 @@ export default function ProjectInfo() {
             variant="outline"
             className="flex-1 border-purple-500/30 hover:border-purple-500/50 bg-transparent"
           >
-            <a href="https://music-genre-detection-api-yv06.onrender.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://music-genre-detection-api-yv06.onrender.com/docs" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="w-4 h-4 mr-2" />
               API Documentation
             </a>
