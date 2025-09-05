@@ -1,39 +1,75 @@
-# Music Genre Classifier Frontend
+# 🎵 Music Genre Detection - Frontend
 
-A single-page Next.js App Router frontend for the Music Genre Classifier API.
+Modern Next.js frontend for the [Music Genre Detection API](https://github.com/aaliawadkar1211/music-genre-detection-api). Upload audio files or record directly in your browser to get real-time genre predictions.
 
-Features:
-- Record audio via MediaRecorder (up to 30s)
-- Upload `.mp3` or `.wav`
-- Sends multipart/form-data with field `file` to `POST /predict`
-- Polished result card with predicted genre and confidence
-- Spinner while waiting, and small history (last 3 predictions)
-- Apple/FAANG-style UI (rounded cards, soft shadows, subtle animations)
-- Environment-configurable API base URL (server-side)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?logo=tailwind-css&logoColor=white)
 
-## API Configuration
+## 🌟 Live Demo
 
-Default base:
-- https://music-genre-detection-api-yv06.onrender.com
+**🚀 Try it now:** [https://music-genre-detection.vercel.app/](https://music-genre-detection.vercel.app/)
 
-Override via environment variable (server-only):
-- API_BASE_URL=https://your-api-base-url
+## ✨ Features
 
-The UI posts to `/api/predict`, which proxies to `${API_BASE_URL}/predict`.
+- 🎙️ **Browser Recording**: Record audio directly using MediaRecorder API
+- 📁 **File Upload**: Drag & drop or select .wav/.mp3 files
+- 📊 **Real-time Results**: Get predictions with confidence scores
+- 📈 **Prediction History**: View all your previous classifications
+- 📱 **Responsive Design**: Works seamlessly on desktop and mobile
+- ⚡ **Fast & Modern**: Built with Next.js and Tailwind CSS
 
-## How it works
+## 🚀 Quick Start
 
-1. Record or upload a file.
-2. The app sends `multipart/form-data` with `file` to the local route `/api/predict`.
-3. The route forwards to the external API and returns its response.
-4. The UI normalizes common response shapes into `{ genre, confidence }` and keeps the last 3 results in `localStorage`.
+```bash
+# Clone the repository
+git clone https://github.com/aaliawadkar1211/music-genre-detection-ui
+cd music-genre-detection-ui
 
-## Notes
+# Install dependencies
+npm install
 
-- MediaRecorder may produce `audio/webm` (Chrome/Edge), `audio/ogg` (Firefox), or `audio/mp4` (Safari). Uploading from disk accepts `.mp3` and `.wav`.
-- If your API only accepts certain formats, consider adding server-side transcoding.
+# Start development server
+npm run dev
 
-## Install / Deploy
+# Open http://localhost:3000
+```
 
-- In v0, open the preview menu to Download ZIP or push to GitHub, then Deploy on Vercel.
-- In Project Settings, add `API_BASE_URL` if you need a custom endpoint.
+## 🏗️ Tech Stack
+
+- **Next.js 13+**: React framework with App Router
+- **Tailwind CSS**: Utility-first styling
+- **MediaRecorder API**: Browser-based audio recording
+- **Fetch API**: Communication with backend API
+
+## 🔧 Configuration
+
+Update the API endpoint in your environment variables:
+
+```bash
+# .env.local
+NEXT_PUBLIC_API_URL=https://music-genre-detection-api-yv06.onrender.com
+```
+
+## 📦 Build & Deploy
+
+```bash
+# Build for production
+npm run build
+
+# Deploy to Vercel
+vercel --prod
+```
+
+## 🔗 Related
+
+- **Backend API**: [music-genre-detection-api](https://github.com/aaliawadkar1211/music-genre-detection-api)
+- **API Docs**: [Swagger Documentation](https://music-genre-detection-api-yv06.onrender.com/docs)
+
+## 👨‍💻 Author
+
+**Aalia Wadkar** - [@aaliawadkar1211](https://github.com/aaliawadkar1211)
+
+---
+
+⭐ Star this repo if you found it helpful!
