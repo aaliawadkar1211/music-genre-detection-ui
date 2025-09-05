@@ -45,7 +45,7 @@ export default function Uploader({ onFileSelected, disabled }: Props) {
       </div>
 
       <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-        Choose an audio file from your device to classify its genre using our AI model.
+        Select an audio file from your device to detect its music genre.
       </p>
 
       <div className="border-2 border-dashed border-muted-foreground/20 rounded-2xl p-8 text-center hover:border-purple-500/50 transition-colors duration-300">
@@ -76,9 +76,13 @@ export default function Uploader({ onFileSelected, disabled }: Props) {
             Choose Audio File
           </Button>
 
-          <p className="text-xs text-muted-foreground">
-            Supports MP3 and WAV formats • Max size depends on server limits
-          </p>
+            <div className="text-left w-full">
+            <p className="text-xs text-muted-foreground">
+              • MP3 and WAV formats are supported.<br />
+              • For best results, use audio files between 20 and 40 seconds.<br />
+              • The API uses a free tier with limited computing power, so processing may take some time.
+            </p>
+            </div>
         </div>
       </div>
 

@@ -24,12 +24,14 @@ export default function Page() {
           <header className="text-center mb-8 sm:mb-12 lg:mb-16">
 
             <h1 className="text-pretty text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Music Genre Classifier
+              Music Genre Detector
             </h1>
 
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4 sm:px-0 mb-6 sm:mb-8">
-              Upload your audio or record live to discover the genre with our advanced AI model. Experience real-time
-              audio visualization and instant predictions.
+              Discover the rhythm 🎶 behind your favorite tracks! 💿 <br/>
+              <span className="font-bold bg-gradient-to-r from-pink-600  via-purple-600  to-gray-900 bg-clip-text text-transparent">Upload a music file </span >  or 
+              <span className="font-bold bg-gradient-to-r from-pink-600  via-purple-600  to-gray-900 bg-clip-text text-transparent"> Record live audio </span>, 
+              and let our model reveal the <span className="font-bold bg-gradient-to-r from-pink-600  via-purple-600  to-gray-900 bg-clip-text text-transparent">GENRE 🎼</span >
             </p>
 
             <div className="flex justify-center mb-6 sm:mb-8">

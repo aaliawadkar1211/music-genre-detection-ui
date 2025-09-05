@@ -32,7 +32,7 @@ export default function ResultCard({
         </div>
         <div>
           <h2 className="text-xl font-semibold bg-gradient-to-r from-gray-900 to-green-600 bg-clip-text text-transparent">
-            AI Prediction
+            Model Prediction
           </h2>
           <p className="text-sm text-muted-foreground">Genre classification results</p>
         </div>
@@ -42,8 +42,8 @@ export default function ResultCard({
         <div className="flex flex-col items-center justify-center py-12 space-y-4">
           <Spinner />
           <div className="text-center">
-            <p className="text-lg font-medium text-foreground">Analyzing Audio</p>
-            <p className="text-sm text-muted-foreground">Our AI is processing your music...</p>
+            <p className="text-lg font-medium text-foreground">Analyzing your audio file</p>
+            <p className="text-sm text-muted-foreground">The model is evaluating your music. Please wait...</p>
           </div>
         </div>
       ) : result ? (

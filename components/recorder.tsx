@@ -361,29 +361,38 @@ export default function Recorder({ onRecorded, disabled }: Props) {
           <h2 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-purple-600 bg-clip-text text-transparent mb-1 transition-all duration-300">
             Record Audio
           </h2>
-          <p className="text-sm text-muted-foreground transition-colors duration-300">
-            Uses your microphone and saves as WAV for best compatibility with our AI model.
-          </p>
+            <p className="text-sm text-muted-foreground transition-colors duration-300">
+            Captures audio from your microphone, saves it as a .wav file, and sends it to the model for genre classification.
+            </p>
         </div>
       </div>
 
       <div className="mb-6">
-        <div
-          className={`glass dark:glass-dark rounded-xl border transition-all duration-500 ease-out relative overflow-hidden ${
-            isRecording
-              ? "border-purple-500/30 bg-gradient-to-r from-purple-500/5 to-pink-500/5 shadow-inner p-4 h-auto opacity-100"
-              : "border-border/50 h-0 p-0 opacity-0"
-          }`}
-        >
-          <canvas
-            ref={canvasRef}
-            className={`block w-full rounded-lg transition-all duration-500 ease-out ${
-              isRecording ? "h-[120px] opacity-100" : "h-0 opacity-0"
-            }`}
-            aria-hidden="true"
-          />
-        </div>
-      </div>
+  <div
+    className={`glass dark:glass-dark rounded-xl border transition-all duration-500 ease-out relative overflow-hidden ${
+      isRecording
+        ? "border-purple-500/30 bg-gradient-to-r from-purple-500/5 to-pink-500/5 shadow-inner p-4 h-auto opacity-100"
+        : "border-border/50 h-auto p-6 opacity-100 flex items-center justify-center"
+    }`}
+    style={{ minHeight: "120px" }} // ensures reserved space always
+  >
+    {!isRecording && (
+      <p className="text-sm text-muted-foreground text-left animate-fade-in">
+        <span className="font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-gray-900 bg-clip-text text-transparent">Start Recording</span> and grant microphone access. <br />
+        <span className="font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-gray-900 bg-clip-text text-transparent">Tip:</span> Minimize background noise for best results.
+      </p>
+    )}
+
+    <canvas
+      ref={canvasRef}
+      className={`block w-full rounded-lg transition-all duration-500 ease-out ${
+        isRecording ? "h-[120px] opacity-100" : "h-0 opacity-0"
+      }`}
+      aria-hidden="true"
+    />
+  </div>
+</div>
+
 
       <div className="space-y-4">
         {/* Timer and Status */}
